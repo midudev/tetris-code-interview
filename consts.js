@@ -5,7 +5,8 @@ export const BOARD_HEIGHT = 30
 export const EVENT_MOVEMENTS = {
   LEFT: 'ArrowLeft',
   DOWN: 'ArrowDown',
-  RIGHT: 'ArrowRight'
+  RIGHT: 'ArrowRight',
+  UP: 'ArrowUp'
 }
 
 export const PIECES = [

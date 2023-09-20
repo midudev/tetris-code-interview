@@ -265,7 +265,7 @@ document.addEventListener('keydown', event => {
     }
   }
 
-  if (event.key === 'ArrowUp') {
+  if (event.key === EVENT_MOVEMENTS.UP) {
     const rotated = []
 
     // ESTO ES LO MÁS COMPLICADO DE LEJOS
