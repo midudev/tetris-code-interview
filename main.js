@@ -1,5 +1,5 @@
 import './style.css'
-import { BLOCK_SIZE, PIECES, BOARD_WIDTH, BOARD_HEIGHT, EVENT_MOVEMENTS } from './consts'
+import { BLOCK_SIZE, PIECES, BOARD_WIDTH, BOARD_HEIGHT, EVENT_MOVEMENTS, COLORS } from './consts'
 
 // 1. inicializar el canvas
 const canvas = document.querySelector('canvas')
@@ -222,8 +222,8 @@ function draw () {
 
   board.forEach((row, y) => {
     row.forEach((value, x) => {
-      if (value === 1) {
-        context.fillStyle = 'yellow'
+      if (value > 0) {
+        context.fillStyle = COLORS[value]
         context.fillRect(x, y, 1, 1)
       }
     })
@@ -232,8 +232,11 @@ function draw () {
   piece.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        context.fillStyle = 'red'
-        context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1)
+        context.beginPath()
+        context.lineWidth = 0.1
+        context.strokeStyle = COLORS[value]
+        context.rect(x + piece.position.x, y + piece.position.y, 1, 1)
+        context.stroke()
       }
     })
   })
@@ -291,7 +294,7 @@ function checkCollision () {
   return piece.shape.find((row, y) => {
     return row.find((value, x) => {
       return (
-        value === 1 &&
+        value > 0 &&
         board[y + piece.position.y]?.[x + piece.position.x] !== 0
       )
     })
@@ -301,8 +304,8 @@ function checkCollision () {
 function solidifyPiece () {
   piece.shape.forEach((row, y) => {
     row.forEach((value, x) => {
-      if (value === 1) {
-        board[y + piece.position.y][x + piece.position.x] = 1
+      if (value > 0) {
+        board[y + piece.position.y][x + piece.position.x] = value
       }
     })
   })
@@ -328,7 +331,7 @@ function removeRows () {
   const rowsToRemove = []
 
   board.forEach((row, y) => {
-    if (row.every(value => value === 1)) {
+    if (row.every(value => value > 0)) {
       rowsToRemove.push(y)
     }
   })
